@@ -1,0 +1,12 @@
+
+@app.route(route)
+
+def get_config(filename)
+	call pygit client and fetch filename
+	if fileneame not found in git
+		return error
+	elif filename ends with .yml
+		return yml
+	else 
+		return json
+	return "

@@ -5,7 +5,7 @@ The purpose of this assignment is to build a simple [Flask](http://flask.pocoo.o
 #### Pre-requisites
 * Install [Visual Studio Code](https://code.visualstudio.com/) with [Python extension](https://code.visualstudio.com/docs/languages/python).
 * [A Linux Bash Shell for Windows 10](http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/)
-    
+
 #### I - Docker Setup
 
 * [1] Install [Docker]
@@ -65,7 +65,7 @@ docker run -d -p 5000:5000 assignment1-flask-app
 * [9] Lookup IP of the assignment1-flask-app container.
 ```sh
 docker-machine ls
-# OR 
+# OR
 docker-machine ip default
 ```
 ```sh
@@ -85,7 +85,7 @@ http://{IP_FROM_STEP_9}:5000/
 
 [Docker]: https://docs.docker.com/engine/installation/#/on-osx-and-windows
 
-#### II - Build a sample application that pulls configuration from a Github repo. 
+#### II - Build a sample application that pulls configuration from a Github repo.
 
 * Integrate with Github to pull application configuration from a [config repo](https://github.com/sithu/assignment1-config-example) which has a set of YML files with {environment}-config.yml format.
 
@@ -128,4 +128,65 @@ $python app.py https://github.com/sithu/assignment1-config-example
 
 ```sh
 docker run -d -p 5000:5000 assignment1-flask-app https://github.com/sithu/assignment1-config-example
+```
+
+### MyWork
+
+#### Out put of the curl command
+
+```java
+
+$ curl http://localhost:5000/v1/dev-config.yml
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    59  100    59    0     0    104      0 --:--:-- --:--:-- --:--:--   104welcome_message: "Hello from Dockerized Flask App Dev File"
+
+
+$ curl http://localhost:5000/v1/dev-config.json
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    40  100    40    0     0     69      0 --:--:-- --:--:-- --:--:--    69{
+        "message" : "This is a Jason File."
+}
+
+$ curl http://localhost:5000/v1/test-config.yml
+
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    83  100    83    0     0    136      0 --:--:-- --:--:-- --:--:--   136welcome_message: "Hello from Dockerized Flask App Test"
+
+Test1 : "This is New test"
+```
+
+#### From Docker
+
+```java
+$ curl http://192.168.99.100:5000/v1/test-config.yml
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    83  100    83    0     0    176      0 --:--:-- --:--:-- --:--:--   183
+welcome_message: "Hello from Dockerized Flask App Test"
+
+Test1 : "This is New test"
+
+$ curl http://192.168.99.100:5000/v1/dev-config.yml
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    59  100    59    0     0    164      0 --:--:-- --:--:-- --:--:--   164
+welcome_message: "Hello from Dockerized Flask App Dev File"
+
+
+$ curl http://192.168.99.100:5000/v1/dev-config.json
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    40  100    40    0     0    116      0 --:--:-- --:--:-- --:--:--   116
+{
+        "message" : "This is a Jason File."
+}
+
 ```
